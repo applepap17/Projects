@@ -25,11 +25,16 @@ public class CalculatorText : MonoBehaviour
         public void OnButtonPress(string value)
     {
         Debug.Log("Button Pressed: " + value);
-        
+
         if (value == "C")
         {
             Clear();
         }
+        else if (value == "." && currentNumber.Contains("."))
+        {
+            return;
+        }
+
         else if (value == "+" || value == "-" || value == "*" || value == "/")
         {
             if (currentNumber != "")
