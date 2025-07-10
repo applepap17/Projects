@@ -7,22 +7,14 @@ public class CalculatorText : MonoBehaviour
 
     private string currentNumber = "";
     private string lastSymbol = "";
-    private float lastNumber = 0;
+    private float lastNumber = 0;   private string expression = "";
 
     void Start()
     {
         CalcText.text = "";
     }
 
-
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-    
-        public void OnButtonPress(string value)
+    public void OnButtonPress(string value)
     {
         Debug.Log("Button Pressed: " + value);
 
@@ -34,7 +26,6 @@ public class CalculatorText : MonoBehaviour
         {
             return;
         }
-
         else if (value == "+" || value == "-" || value == "*" || value == "/")
         {
             if (currentNumber != "")
@@ -42,7 +33,10 @@ public class CalculatorText : MonoBehaviour
                 lastNumber = float.Parse(currentNumber);
                 currentNumber = "";
             }
+
             lastSymbol = value;
+            expression += " " + value + " ";
+            CalcText.text = expression;
         }
         else if (value == "=")
         {
@@ -59,15 +53,19 @@ public class CalculatorText : MonoBehaviour
                     case "/": result = secondNumber != 0 ? lastNumber / secondNumber : 0; break;
                 }
 
-                CalcText.text = result.ToString();
+                expression += " = " + result.ToString();
+                CalcText.text = expression;
+
                 currentNumber = result.ToString();
                 lastSymbol = "";
+                expression = currentNumber;
             }
         }
         else
         {
             currentNumber += value;
-            CalcText.text = currentNumber;
+            expression += value;
+            CalcText.text = expression;
         }
     }
 
@@ -76,6 +74,7 @@ public class CalculatorText : MonoBehaviour
         currentNumber = "";
         lastSymbol = "";
         lastNumber = 0;
+        expression = "";
         CalcText.text = "";
     }
 }
